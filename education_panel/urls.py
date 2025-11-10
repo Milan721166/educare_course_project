@@ -38,8 +38,8 @@ urlpatterns = [
     path('', core_views.home, name='home'),
     path('accounts/', include('apps.accounts.urls')),
     path('teachers/', include('apps.teachers.urls')),
-    path('students/', include('apps.students.urls')),  # Add this line
-    # path('courses/', include('apps.courses.urls')),    # Add this line
+    path('students/', include('apps.students.urls')),  
+    path('courses/', include('apps.courses.urls')),    
 ]
 
 if settings.DEBUG:

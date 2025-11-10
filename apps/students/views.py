@@ -235,8 +235,10 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .forms import StudentRegistrationForm, StudentLoginForm, CourseEnrollmentForm
+from django.db.models import Q
+from .forms import StudentRegistrationForm, StudentLoginForm
 from .models import Enrollment, StudentProfile
+from apps.courses.models import Course, Category
 
 def student_register(request):
     if request.method == 'POST':
@@ -307,6 +309,7 @@ def student_profile(request):
     }
     return render(request, 'students/profile.html', context)
 
+
 @login_required
 def available_courses(request):
     """View for students to browse available courses"""
@@ -314,18 +317,41 @@ def available_courses(request):
         messages.error(request, 'Access denied.')
         return redirect('home')
     
-    # Simple course data (we'll replace this with database later)
-    sample_courses = [
-        {'title': 'Introduction to Programming', 'level': 'Beginner', 'description': 'Learn basic programming concepts'},
-        {'title': 'Web Development', 'level': 'Intermediate', 'description': 'Build modern web applications'},
-        {'title': 'Data Science', 'level': 'Advanced', 'description': 'Analyze and visualize data'},
-        {'title': 'Database Management', 'level': 'Intermediate', 'description': 'Learn SQL and database design'},
-        {'title': 'Mobile App Development', 'level': 'Advanced', 'description': 'Build cross-platform mobile apps'},
-        {'title': 'Cyber Security', 'level': 'Advanced', 'description': 'Learn security best practices'},
-    ]
+    # Get published courses that student is not enrolled in
+    enrolled_course_ids = Enrollment.objects.filter(
+        student=request.user,
+        status__in=['enrolled', 'in_progress', 'completed']
+    ).values_list('course_id', flat=True)
+    
+    courses = Course.objects.filter(
+        status='published'
+    ).exclude(
+        id__in=enrolled_course_ids
+    ).select_related('category')
+    
+    # Filtering
+    category_id = request.GET.get('category')
+    level = request.GET.get('level')
+    search = request.GET.get('search')
+    
+    if category_id:
+        courses = courses.filter(category_id=category_id)
+    if level:
+        courses = courses.filter(level=level)
+    if search:
+        courses = courses.filter(
+            Q(title__icontains=search) |
+            Q(description__icontains=search)
+        )
+    
+    categories = Category.objects.all()
     
     context = {
-        'courses': sample_courses
+        'courses': courses,
+        'categories': categories,
+        'selected_category': category_id,
+        'selected_level': level,
+        'search_query': search,
     }
     return render(request, 'students/available_courses.html', context)
 
