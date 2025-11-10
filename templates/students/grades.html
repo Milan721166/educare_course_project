@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block title %}My Grades{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <h2>My Grades</h2>
+        <p class="lead">{{ message }}</p>
+        
+        <div class="card">
+            <div class="card-body">
+                <div class="alert alert-info">
+                    <strong>Grade tracking is coming soon!</strong><br>
+                    This feature will allow you to view your grades, track your academic progress, 
+                    and see detailed performance reports for each course.
+                </div>
+                
+                <div class="row mt-4">
+                    <div class="col-md-4">
+                        <div class="card text-white bg-primary">
+                            <div class="card-body text-center">
+                                <h3>GPA: --</h3>
+                                <p>Current Grade Point Average</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card text-white bg-success">
+                            <div class="card-body text-center">
+                                <h3>Completed: 0</h3>
+                                <p>Courses Completed</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card text-white bg-warning">
+                            <div class="card-body text-center">
+                                <h3>In Progress: 0</h3>
+                                <p>Active Courses</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-4">
+                    <h5>Sample Grade Report (Coming Soon)</h5>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Course</th>
+                                <th>Assignment</th>
+                                <th>Grade</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Introduction to Programming</td>
+                                <td>Final Exam</td>
+                                <td>--</td>
+                                <td><span class="badge bg-secondary">Pending</span></td>
+                            </tr>
+                            <tr>
+                                <td>Web Development</td>
+                                <td>Project 1</td>
+                                <td>--</td>
+                                <td><span class="badge bg-secondary">Pending</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="mt-3">
+                    <a href="{% url 'student_dashboard' %}" class="btn btn-secondary">Back to Dashboard</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

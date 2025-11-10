@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <h1>Welcome to Education Panel</h1>
+            <p class="lead">Manage your educational institution with ease</p>
+            
+            <div class="row mt-5">
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">For Teachers</h5>
+                            <p class="card-text">Access your teaching dashboard</p>
+                            <a href="{% url 'teacher_login' %}" class="btn btn-primary">Teacher Login</a>
+                            <a href="{% url 'teacher_register' %}" class="btn btn-outline-primary mt-2">Teacher Register</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">For Students</h5>
+                            <p class="card-text">Access your learning dashboard</p>
+                            <a href="{% url 'student_login' %}" class="btn btn-success">Student Login</a>
+                            <a href="{% url 'student_register' %}" class="btn btn-outline-success mt-2">Student Register</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">For Administrators</h5>
+                            <p class="card-text">Manage the entire system</p>
+                            <a href="/admin/" class="btn btn-warning">Admin Panel</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

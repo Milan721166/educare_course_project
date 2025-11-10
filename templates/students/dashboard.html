@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+
+{% block title %}Student Dashboard{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <h2>Student Dashboard</h2>
+        <p class="lead">Welcome, {{ user.username }}!</p>
+    </div>
+</div>
+
+<!-- Statistics Cards -->
+<div class="row mt-4">
+    <div class="col-md-4">
+        <div class="card text-white bg-primary">
+            <div class="card-body">
+                <h5 class="card-title">Total Courses</h5>
+                <h2 class="card-text">{{ total_courses }}</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-white bg-success">
+            <div class="card-body">
+                <h5 class="card-title">Completed</h5>
+                <h2 class="card-text">{{ completed_courses }}</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-white bg-warning">
+            <div class="card-body">
+                <h5 class="card-title">In Progress</h5>
+                <h2 class="card-text">{{ in_progress_courses }}</h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- My Courses -->
+<div class="row mt-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="card-title mb-0">My Courses</h5>
+              <a href="#" class="btn btn-primary btn-sm" onclick="alert('Course browsing coming soon!')">Browse Courses</a>
+              
+            </div>
+            <div class="card-body">
+                {% if enrollments %}
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Course</th>
+                                    <th>Code</th>
+                                    <th>Status</th>
+                                    <th>Progress</th>
+                                    <th>Enrollment Date</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for enrollment in enrollments %}
+                                <tr>
+                                    <td>{{ enrollment.course.title }}</td>
+                                    <td>{{ enrollment.course.code }}</td>
+                                    <td>
+                                        <span class="badge 
+                                            {% if enrollment.status == 'completed' %}bg-success
+                                            {% elif enrollment.status == 'in_progress' %}bg-warning
+                                            {% else %}bg-info{% endif %}">
+                                            {{ enrollment.status|title }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div class="progress" style="height: 20px;">
+                                            <div class="progress-bar" role="progressbar" 
+                                                 style="width: {{ enrollment.progress }}%;" 
+                                                 aria-valuenow="{{ enrollment.progress }}" 
+                                                 aria-valuemin="0" aria-valuemax="100">
+                                                {{ enrollment.progress }}%
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>{{ enrollment.enrollment_date|date:"M d, Y" }}</td>
+                                    <td>
+                                        <a href="{% url 'course_detail' enrollment.course.id %}" 
+                                           class="btn btn-sm btn-outline-primary">View</a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% else %}
+                    <p class="text-muted">You are not enrolled in any courses yet.</p>
+                    <a href="{% url 'student_courses' %}" class="btn btn-primary">Browse Available Courses</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Quick Actions -->
+<!-- Quick Actions -->
+<div class="row mt-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">Quick Actions</h5>
+            </div>
+            <div class="card-body">
+                <a href="{% url 'student_courses' %}" class="btn btn-outline-primary">Browse Courses</a>
+                <a href="{% url 'student_profile' %}" class="btn btn-outline-secondary">My Profile</a>
+                <a href="{% url 'student_grades' %}" class="btn btn-outline-success">My Grades</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
