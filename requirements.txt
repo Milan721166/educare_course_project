@@ -1,5 +1,17 @@
+# Core Django
 Django==5.2.8
-Pillow==11.0.0
+asgiref==3.8.1
 sqlparse==0.5.3
 tzdata==2024.2
-asgiref==3.8.1
+
+# Image Processing
+Pillow==11.0.0
+
+# Production
+gunicorn==22.0.0
+whitenoise==6.8.1
+dj-database-url==2.1.0
+python-dotenv==1.0.1
+
+# PostgreSQL (for production)
+psycopg2-binary==2.9.10
