@@ -37,7 +37,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', core_views.home, name='home'),
     path('accounts/', include('apps.accounts.urls')),
-    path('teachers/', include('apps.teachers.urls')),
+    # path('teachers/', include('apps.teachers.urls')),
     path('students/', include('apps.students.urls')),  
     path('courses/', include('apps.courses.urls')),    
 ]
