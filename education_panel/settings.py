@@ -137,8 +137,6 @@ if not DEBUG:
 # ==============================
 AUTH_USER_MODEL = 'accounts.User'
 
-LOGIN_URL = 'teacher_login'
-LOGIN_REDIRECT_URL = 'teacher_dashboard'
 LOGOUT_REDIRECT_URL = 'home'
 
 
